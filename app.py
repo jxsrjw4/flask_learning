@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_script import  Manager
+
 import os
 
 class Application( Flask ):
@@ -18,9 +19,14 @@ class Application( Flask ):
         db.init_app(self)
 
 
+
 db = SQLAlchemy()
 app = Application(__name__, template_folder=os.getcwd()+'/web/templates',root_path=os.getcwd())
 manager = Manager(app)
+
+from common.models.suppliers import  Supplier
+with app.app_context():
+    db.create_all()  # 把所有的数据模型映射到数据库中
 
 
 ##
